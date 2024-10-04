@@ -1,0 +1,4 @@
+Datos del cliente:
+Nombre: Nico
+Dirección: Calle
+Teléfono: 6
