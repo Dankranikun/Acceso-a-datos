@@ -34,6 +34,8 @@ public class AccesoDOM {
             factory.setIgnoringElementContentWhitespace(true);
             //DocumentBuilder tiene el método parse que es el que genera DOM en memoria
             DocumentBuilder builder = factory.newDocumentBuilder();
+            
+            // Se rompe aquí creo
             doc = builder.parse(f);
             //Ahora doc apunta al árbol DOM y podemos recorrerlo
             System.out.println("DOM creado.");
@@ -77,4 +79,6 @@ public class AccesoDOM {
         }
         return retorno;
     }
+    
+    
 }
