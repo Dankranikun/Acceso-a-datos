@@ -1,0 +1,12 @@
+<coleccion>
+<proyecto>
+    <nombre>Sistema de Gestión Escolar</nombre>
+    <equipo>Desarrollo Web</equipo>
+    <lider_proyecto>Ana Torres</lider_proyecto>
+    <fecha_inicio>2023-03-01</fecha_inicio>
+    <fecha_fin>2024-03-01</fecha_fin>
+    <tecnologias>Java, SQL, Angular</tecnologias>
+    <estado>En progreso</estado>
+    <presupuesto>100000 USD</presupuesto>
+</proyecto>
+</coleccion>
