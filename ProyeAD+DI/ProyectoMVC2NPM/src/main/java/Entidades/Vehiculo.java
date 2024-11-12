@@ -2,27 +2,51 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DTO;
+package Entidades;
 
 /**
  *
  * @author nicop
  */
-public class DTOVehiculo {
-
+public class Vehiculo {
+    private int idV;
     private String matricula;
     private String marca;
     private String modelo;
     private String fecha;
 
-    public DTOVehiculo() {
+    public Vehiculo() {
     }
 
-    public DTOVehiculo(String matricula, String marca, String modelo, String fecha) {
+    public Vehiculo(String matricula, String marca, String modelo, String fecha) {
         this.matricula = matricula;
         this.marca = marca;
         this.modelo = modelo;
         this.fecha = fecha;
+    }
+
+    public Vehiculo(int idV, String matricula, String marca, String modelo, String fecha) {
+        this.idV = idV;
+        this.matricula = matricula;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.fecha = fecha;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public int getIdV() {
+        return idV;
+    }
+
+    public void setIdV(int idV) {
+        this.idV = idV;
     }
 
     public String getMatricula() {
@@ -49,17 +73,9 @@ public class DTOVehiculo {
         this.modelo = modelo;
     }
 
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
     @Override
     public String toString() {
-        return "DTOVehiculo{" + "matricula=" + matricula + ", marca=" + marca + ", modelo=" + modelo + ", fecha=" + fecha + '}';
+        return "DTOVehiculo{" + "idV=" + idV + ", matricula=" + matricula + ", marca=" + marca + ", modelo=" + modelo + ", fecha=" + fecha + '}';
     }
-
 }
+

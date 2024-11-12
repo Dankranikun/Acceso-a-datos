@@ -4,6 +4,7 @@
  */
 package Vista;
 
+import Controlador.PersonaVehiculoController;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -91,6 +92,11 @@ public class Vista extends javax.swing.JFrame {
         cbMarcas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jbAplicarFiltros.setText("Aplicar filtros");
+        jbAplicarFiltros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAplicarFiltrosActionPerformed(evt);
+            }
+        });
 
         jlModelo.setText("Modelo:");
 
@@ -274,6 +280,10 @@ public class Vista extends javax.swing.JFrame {
     private void jrHombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrHombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jrHombreActionPerformed
+
+    private void jbAplicarFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAplicarFiltrosActionPerformed
+    
+    }//GEN-LAST:event_jbAplicarFiltrosActionPerformed
 
     /**
      * @param args the command line arguments

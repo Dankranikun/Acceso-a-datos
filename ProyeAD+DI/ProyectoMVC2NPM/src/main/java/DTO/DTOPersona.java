@@ -10,7 +10,6 @@ package DTO;
  */
 public class DTOPersona {
 
-    private int idP;
     private String dni;
     private String nombre;
     private String genero;
@@ -22,27 +21,10 @@ public class DTOPersona {
         this.nombre = nombre;
     }
 
-    public DTOPersona(int idP, String dni, String nombre, String genero) {
-        this.idP = idP;
+    public DTOPersona(String dni, String nombre, String genero) {
         this.dni = dni;
         this.nombre = nombre;
         this.genero = genero;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
-    public int getIdP() {
-        return idP;
-    }
-
-    public void setIdP(int idP) {
-        this.idP = idP;
     }
 
     public String getDni() {
@@ -61,8 +43,16 @@ public class DTOPersona {
         this.nombre = nombre;
     }
 
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
     @Override
     public String toString() {
-        return "DTOPersona{" + "idP=" + idP + ", dni=" + dni + ", nombre=" + nombre + ", genero=" + genero + '}';
+        return "DTOPersona{" + "dni=" + dni + ", nombre=" + nombre + ", genero=" + genero + '}';
     }
 }

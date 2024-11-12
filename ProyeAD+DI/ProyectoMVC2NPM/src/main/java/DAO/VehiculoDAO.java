@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
-/**
- *
- * @author nicop
- */
 import DTO.DTOVehiculo;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VehiculoDAO extends GenericDAO<DTOVehiculo> {
+public class VehiculoDAO extends GenericDAO<DTOVehiculo, String> {
 
     private static final String URL = "jdbc:mysql://localhost:3306/registroconcensionario";
     private static final String USER = "admin";
@@ -26,11 +18,12 @@ public class VehiculoDAO extends GenericDAO<DTOVehiculo> {
     @Override
     public boolean create(DTOVehiculo vehiculo) {
         String sql = "INSERT INTO vehiculo (matricula, marca, modelo, fecha) VALUES (?, ?, ?, ?)";
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, vehiculo.getMatricula());
             statement.setString(2, vehiculo.getMarca());
             statement.setString(3, vehiculo.getModelo());
-            statement.setDate(4, java.sql.Date.valueOf(vehiculo.getFecha()));
+            statement.setString(4, vehiculo.getFecha());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,17 +32,17 @@ public class VehiculoDAO extends GenericDAO<DTOVehiculo> {
     }
 
     @Override
-    public DTOVehiculo read(int id) {
-        String sql = "SELECT matricula, marca, modelo, fecha FROM vehiculo WHERE idV = ?";
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
+    public DTOVehiculo read(String matricula) {
+        String sql = "SELECT matricula, marca, modelo, fecha FROM vehiculo WHERE matricula = ?";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, matricula);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return new DTOVehiculo(id,
-                        resultSet.getString("matricula"),
-                        resultSet.getString("marca"),
-                        resultSet.getString("modelo"),
-                        resultSet.getDate("fecha").toString());
+                return new DTOVehiculo(resultSet.getString("matricula"),
+                                       resultSet.getString("marca"),
+                                       resultSet.getString("modelo"),
+                                       resultSet.getString("fecha"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,13 +54,14 @@ public class VehiculoDAO extends GenericDAO<DTOVehiculo> {
     public List<DTOVehiculo> readAll() {
         List<DTOVehiculo> vehiculos = new ArrayList<>();
         String sql = "SELECT matricula, marca, modelo, fecha FROM vehiculo";
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement statement = connection.prepareStatement(sql); ResultSet resultSet = statement.executeQuery()) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                vehiculos.add(new DTOVehiculo(0, // ID is not displayed or used
-                        resultSet.getString("matricula"),
-                        resultSet.getString("marca"),
-                        resultSet.getString("modelo"),
-                        resultSet.getDate("fecha").toString()));
+                vehiculos.add(new DTOVehiculo(resultSet.getString("matricula"),
+                                              resultSet.getString("marca"),
+                                              resultSet.getString("modelo"),
+                                              resultSet.getString("fecha")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,13 +71,13 @@ public class VehiculoDAO extends GenericDAO<DTOVehiculo> {
 
     @Override
     public boolean update(DTOVehiculo vehiculo) {
-        String sql = "UPDATE vehiculo SET matricula = ?, marca = ?, modelo = ?, fecha = ? WHERE idV = ?";
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, vehiculo.getMatricula());
-            statement.setString(2, vehiculo.getMarca());
-            statement.setString(3, vehiculo.getModelo());
-            statement.setDate(4, java.sql.Date.valueOf(vehiculo.getFecha()));
-            statement.setInt(5, vehiculo.getIdV());
+        String sql = "UPDATE vehiculo SET marca = ?, modelo = ?, fecha = ? WHERE matricula = ?";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, vehiculo.getMarca());
+            statement.setString(2, vehiculo.getModelo());
+            statement.setString(3, vehiculo.getFecha());
+            statement.setString(4, vehiculo.getMatricula());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,10 +86,11 @@ public class VehiculoDAO extends GenericDAO<DTOVehiculo> {
     }
 
     @Override
-    public boolean delete(int id) {
-        String sql = "DELETE FROM vehiculo WHERE idV = ?";
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
+    public boolean delete(String matricula) {
+        String sql = "DELETE FROM vehiculo WHERE matricula = ?";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, matricula);
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

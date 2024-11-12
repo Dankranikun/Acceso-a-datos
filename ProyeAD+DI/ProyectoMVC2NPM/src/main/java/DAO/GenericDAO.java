@@ -1,7 +1,8 @@
 package DAO;
+
 import java.util.List;
 
-public abstract class GenericDAO<T> {
+public abstract class GenericDAO<T, K> {
 
     /**
      * Crea un nuevo registro en la base de datos.
@@ -12,12 +13,12 @@ public abstract class GenericDAO<T> {
     public abstract boolean create(T entity);
 
     /**
-     * Recupera un registro de la base de datos por su ID.
+     * Recupera un registro de la base de datos por su clave.
      *
-     * @param id El ID de la entidad a ser recuperada.
-     * @return La entidad correspondiente al ID dado, o null si no se encuentra.
+     * @param key La clave de la entidad a ser recuperada.
+     * @return La entidad correspondiente a la clave dada, o null si no se encuentra.
      */
-    public abstract T read(int id);
+    public abstract T read(K key);
 
     /**
      * Recupera todos los registros de la base de datos.
@@ -35,10 +36,10 @@ public abstract class GenericDAO<T> {
     public abstract boolean update(T entity);
 
     /**
-     * Elimina un registro de la base de datos por su ID.
+     * Elimina un registro de la base de datos por su clave.
      *
-     * @param id El ID de la entidad a ser eliminada.
+     * @param key La clave de la entidad a ser eliminada.
      * @return true si el registro se elimina con éxito, false en caso contrario.
      */
-    public abstract boolean delete(int id);
+    public abstract boolean delete(K key);
 }
