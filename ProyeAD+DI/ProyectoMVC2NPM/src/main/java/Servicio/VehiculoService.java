@@ -1,4 +1,4 @@
-package Serv;
+package Servicio;
 
 import DAO.VehiculoDAO;
 import DTO.DTOVehiculo;

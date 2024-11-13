@@ -15,10 +15,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Vista extends javax.swing.JFrame {
 
+    private boolean pulsado = false;
+
     String[] nomColumnas = {"Nombre", "Matricula", "Modelo", "Marca", "Año", "Ant. Prop."};
     Object[][] matrizDatos;
-    
+
     DefaultTableModel dtm = new DefaultTableModel(matrizDatos, nomColumnas);
+
     /**
      * Creates new form Vista
      */
@@ -244,11 +247,10 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1PropertyChange
 
     private void jbAvanzadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAvanzadosActionPerformed
-        boolean pulsado = false;
-        
+//        boolean pulsado = false;
+
         // NO SE OCULTA
         // HAY QUE MIRARLO
-        
         if (!pulsado) {
             pulsado = true;
             jbAvanzados.setBackground(Color.black);
@@ -282,7 +284,7 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_jrHombreActionPerformed
 
     private void jbAplicarFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAplicarFiltrosActionPerformed
-    
+
     }//GEN-LAST:event_jbAplicarFiltrosActionPerformed
 
     /**
