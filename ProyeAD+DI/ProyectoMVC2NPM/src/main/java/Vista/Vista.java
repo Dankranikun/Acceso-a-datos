@@ -4,9 +4,7 @@
  */
 package Vista;
 
-import Controlador.PersonaVehiculoController;
 import java.awt.Color;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -62,10 +60,11 @@ public class Vista extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuRaiz = new javax.swing.JMenu();
-        jMenuItemPersona = new javax.swing.JMenuItem();
-        jMenuItemCoche = new javax.swing.JMenuItem();
+        jMenuItemCrear = new javax.swing.JMenuItem();
+        jMenuItemAsociar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -92,7 +91,7 @@ public class Vista extends javax.swing.JFrame {
         buttonGroup1.add(jrMujer);
         jrMujer.setText("Mujer");
 
-        cbMarcas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbMarcas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Audi", "BMW", "Chevrolet", "Ford", "Honda", "Hyundai", "Kia", "Mazda", "Mercedes-Benz", "Nissan", "Toyota", "Volkswagen" }));
 
         jbAplicarFiltros.setText("Aplicar filtros");
         jbAplicarFiltros.addActionListener(new java.awt.event.ActionListener() {
@@ -108,6 +107,11 @@ public class Vista extends javax.swing.JFrame {
         jlAnoMatricu.setText("Año de matriculación:");
 
         tfAnoMatriculacion.setText("jTextField1");
+        tfAnoMatriculacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfAnoMatriculacionActionPerformed(evt);
+            }
+        });
 
         jlNumVehiculos.setText("Nº de veículos:");
 
@@ -185,13 +189,24 @@ public class Vista extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jTable1);
 
+        jButton1.setText("Mostrar registros");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -199,21 +214,23 @@ public class Vista extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenuRaiz.setText("Opciones");
 
-        jMenuItemPersona.setText("Crear persona");
-        jMenuItemPersona.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemCrear.setText("Crear vehiculo");
+        jMenuItemCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemPersonaActionPerformed(evt);
+                jMenuItemCrearActionPerformed(evt);
             }
         });
-        jMenuRaiz.add(jMenuItemPersona);
+        jMenuRaiz.add(jMenuItemCrear);
 
-        jMenuItemCoche.setText("Crear vehículo");
-        jMenuRaiz.add(jMenuItemCoche);
+        jMenuItemAsociar.setText("Asociar vehículo");
+        jMenuRaiz.add(jMenuItemAsociar);
 
         jMenuBar1.add(jMenuRaiz);
 
@@ -233,10 +250,11 @@ public class Vista extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -275,9 +293,9 @@ public class Vista extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jbAvanzadosActionPerformed
 
-    private void jMenuItemPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPersonaActionPerformed
+    private void jMenuItemCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCrearActionPerformed
         //TODO
-    }//GEN-LAST:event_jMenuItemPersonaActionPerformed
+    }//GEN-LAST:event_jMenuItemCrearActionPerformed
 
     private void jrHombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrHombreActionPerformed
         // TODO add your handling code here:
@@ -286,6 +304,21 @@ public class Vista extends javax.swing.JFrame {
     private void jbAplicarFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAplicarFiltrosActionPerformed
 
     }//GEN-LAST:event_jbAplicarFiltrosActionPerformed
+
+    private void tfAnoMatriculacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAnoMatriculacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfAnoMatriculacionActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int filaSeleccionada = jTable1.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            // Obtener la matrícula de la fila seleccionada
+            String matricula = (String) jTable1.getValueAt(filaSeleccionada, 1);
+
+            // Llama al controlador para mostrar los detalles del vehículo
+            personaVehiculoController.mostrarDetallesVehiculo(matricula);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -327,9 +360,10 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbMarcas;
     private javax.swing.JComboBox<String> cbModelos;
+    private javax.swing.JButton jButton1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItemCoche;
-    private javax.swing.JMenuItem jMenuItemPersona;
+    private javax.swing.JMenuItem jMenuItemAsociar;
+    private javax.swing.JMenuItem jMenuItemCrear;
     private javax.swing.JMenu jMenuRaiz;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

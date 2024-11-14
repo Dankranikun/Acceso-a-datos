@@ -4,11 +4,16 @@
  */
 package Vista;
 
+import DAO.VehiculoDAO;
+import java.util.List;
+
 /**
  *
  * @author nicop
  */
 public class CrearVehiculo extends javax.swing.JFrame {
+
+    private VehiculoDAO vehiculoDAO = new VehiculoDAO();
 
     /**
      * Creates new form MenuCrear
@@ -34,7 +39,7 @@ public class CrearVehiculo extends javax.swing.JFrame {
         tfMatriculaNueva = new javax.swing.JTextField();
         tfAnyoNueva = new javax.swing.JTextField();
         cbMarcaNueva = new javax.swing.JComboBox<>();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbModeloNueva = new javax.swing.JComboBox<>();
         bOkNuevo = new javax.swing.JButton();
         bCancelarNuevo = new javax.swing.JButton();
 
@@ -48,14 +53,20 @@ public class CrearVehiculo extends javax.swing.JFrame {
 
         jLabel4.setText("Modelo:");
 
-        cbMarcaNueva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbMarcaNueva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Audi", "BMW", "Chevrolet", "Ford", "Honda", "Hyundai", "Kia", "Mazda", "Mercedes-Benz", "Nissan", "Toyota", "Volkswagen" }));
+        cbMarcaNueva.setName("Añadir vehículo"); // NOI18N
         cbMarcaNueva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbMarcaNuevaActionPerformed(evt);
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbModeloNueva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbModeloNueva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbModeloNuevaActionPerformed(evt);
+            }
+        });
 
         bOkNuevo.setText("OK");
 
@@ -84,7 +95,7 @@ public class CrearVehiculo extends javax.swing.JFrame {
                             .addComponent(tfMatriculaNueva)
                             .addComponent(tfAnyoNueva)
                             .addComponent(cbMarcaNueva, 0, 110, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(cbModeloNueva, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bOkNuevo)
                         .addGap(18, 18, 18)
@@ -109,7 +120,7 @@ public class CrearVehiculo extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbModeloNueva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(bOkNuevo)
@@ -121,12 +132,23 @@ public class CrearVehiculo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbMarcaNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMarcaNuevaActionPerformed
-        // TODO add your handling code here:
+        String selectedMarca = (String) cbMarcaNueva.getSelectedItem();
+        if (selectedMarca != null && !selectedMarca.isEmpty()) {
+            cargarModelos(selectedMarca); // Cargar los modelos correspondientes a la marca seleccionada
+        }
     }//GEN-LAST:event_cbMarcaNuevaActionPerformed
 
     private void bCancelarNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarNuevoActionPerformed
         dispose();
     }//GEN-LAST:event_bCancelarNuevoActionPerformed
+
+    private void cbModeloNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbModeloNuevaActionPerformed
+        String selectedMarca = (String) cbMarcaNueva.getSelectedItem();
+        if (selectedMarca != null && !selectedMarca.isEmpty()) {
+            // Cargar los modelos correspondientes a la marca seleccionada
+            cargarModelos(selectedMarca);
+        }
+    }//GEN-LAST:event_cbModeloNuevaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,11 +186,33 @@ public class CrearVehiculo extends javax.swing.JFrame {
         });
     }
 
+    private void cargarMarcas() {
+        // Llama al DAO para obtener todas las marcas y llenar el JComboBox
+        List<String> marcas = vehiculoDAO.obtenerMarcas();
+        cbMarcaNueva.removeAllItems(); // Limpia los elementos anteriores
+
+        // Añadir las marcas al JComboBox
+        for (String marca : marcas) {
+            cbMarcaNueva.addItem(marca);
+        }
+    }
+
+    private void cargarModelos(String marca) {
+        // Llama al DAO para obtener todos los modelos de la marca seleccionada
+        List<String> modelos = vehiculoDAO.obtenerModelosPorMarca(marca);
+        cbModeloNueva.removeAllItems(); // Limpia los elementos anteriores
+
+        // Añadir los modelos al JComboBox
+        for (String modelo : modelos) {
+            cbModeloNueva.addItem(modelo);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bCancelarNuevo;
     private javax.swing.JButton bOkNuevo;
     private javax.swing.JComboBox<String> cbMarcaNueva;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cbModeloNueva;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
