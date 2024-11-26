@@ -14,7 +14,7 @@ public class DTOPersonaVehiculo {
     int id_vehiculo;
     String nombre;
     String matricula;
-    String anyo;
+    int anyo;
     String marca;
     String modelo;
     String fecha_inicio;
@@ -24,7 +24,15 @@ public class DTOPersonaVehiculo {
     public DTOPersonaVehiculo() {
     }
 
-    public DTOPersonaVehiculo(int id, int id_persona, int id_vehiculo, String nombre, String matricula, String anyo, String modelo, String marca, String fecha_inicio, String fecha_fin, String genero) {
+    public DTOPersonaVehiculo(String nombre, String matricula, int anyo, String marca, String modelo) {
+        this.nombre = nombre;
+        this.matricula = matricula;
+        this.anyo = anyo;
+        this.marca = marca;
+        this.modelo = modelo;
+    }
+
+    public DTOPersonaVehiculo(int id, int id_persona, int id_vehiculo, String nombre, String matricula, int anyo, String modelo, String marca, String fecha_inicio, String fecha_fin, String genero) {
         this.id = id;
         this.id_persona = id_persona;
         this.id_vehiculo = id_vehiculo;
@@ -70,11 +78,11 @@ public class DTOPersonaVehiculo {
         this.nombre = nombre;
     }
 
-    public String getAnyo() {
+    public int getAnyo() {
         return anyo;
     }
 
-    public void setAnyo(String anyo) {
+    public void setAnyo(int anyo) {
         this.anyo = anyo;
     }
 

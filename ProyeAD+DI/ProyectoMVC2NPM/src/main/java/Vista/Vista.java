@@ -4,6 +4,7 @@
  */
 package Vista;
 
+import Controlador.PersonaVehiculoController;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,10 +16,10 @@ public class Vista extends javax.swing.JFrame {
 
     private boolean pulsado = false;
 
-    String[] nomColumnas = {"Nombre", "Matricula", "Modelo", "Marca", "Año", "Ant. Prop."};
-    Object[][] matrizDatos;
+    private String[] nomColumnas = {"Nombre", "Matricula", "Modelo", "Marca", "Año", "Ant. Prop."};
+    private Object[][] matrizDatos;
 
-    DefaultTableModel dtm = new DefaultTableModel(matrizDatos, nomColumnas);
+    private DefaultTableModel dtm = new DefaultTableModel(matrizDatos, nomColumnas);
 
     /**
      * Creates new form Vista
@@ -316,7 +317,7 @@ public class Vista extends javax.swing.JFrame {
             String matricula = (String) jTable1.getValueAt(filaSeleccionada, 1);
 
             // Llama al controlador para mostrar los detalles del vehículo
-            personaVehiculoController.mostrarDetallesVehiculo(matricula);
+            PersonaVehiculoController.mostrarDetallesVehiculo(matricula);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -381,4 +382,220 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JTextField tfNombre;
     private javax.swing.JTextField tfNumVehiculos;
     // End of variables declaration//GEN-END:variables
+
+    public boolean isPulsado() {
+        return pulsado;
+    }
+
+    public void setPulsado(boolean pulsado) {
+        this.pulsado = pulsado;
+    }
+
+    public String[] getNomColumnas() {
+        return nomColumnas;
+    }
+
+    public void setNomColumnas(String[] nomColumnas) {
+        this.nomColumnas = nomColumnas;
+    }
+
+    public Object[][] getMatrizDatos() {
+        return matrizDatos;
+    }
+
+    public void setMatrizDatos(Object[][] matrizDatos) {
+        this.matrizDatos = matrizDatos;
+    }
+
+    public DefaultTableModel getDtm() {
+        return dtm;
+    }
+
+    public void setDtm(DefaultTableModel dtm) {
+        this.dtm = dtm;
+    }
+
+    public javax.swing.ButtonGroup getButtonGroup1() {
+        return buttonGroup1;
+    }
+
+    public void setButtonGroup1(javax.swing.ButtonGroup buttonGroup1) {
+        this.buttonGroup1 = buttonGroup1;
+    }
+
+    public javax.swing.JComboBox<String> getCbMarcas() {
+        return cbMarcas;
+    }
+
+    public void setCbMarcas(javax.swing.JComboBox<String> cbMarcas) {
+        this.cbMarcas = cbMarcas;
+    }
+
+    public javax.swing.JComboBox<String> getCbModelos() {
+        return cbModelos;
+    }
+
+    public void setCbModelos(javax.swing.JComboBox<String> cbModelos) {
+        this.cbModelos = cbModelos;
+    }
+
+    public javax.swing.JButton getjButton1() {
+        return jButton1;
+    }
+
+    public void setjButton1(javax.swing.JButton jButton1) {
+        this.jButton1 = jButton1;
+    }
+
+    public javax.swing.JMenuBar getjMenuBar1() {
+        return jMenuBar1;
+    }
+
+    public void setjMenuBar1(javax.swing.JMenuBar jMenuBar1) {
+        this.jMenuBar1 = jMenuBar1;
+    }
+
+    public javax.swing.JMenuItem getjMenuItemAsociar() {
+        return jMenuItemAsociar;
+    }
+
+    public void setjMenuItemAsociar(javax.swing.JMenuItem jMenuItemAsociar) {
+        this.jMenuItemAsociar = jMenuItemAsociar;
+    }
+
+    public javax.swing.JMenuItem getjMenuItemCrear() {
+        return jMenuItemCrear;
+    }
+
+    public void setjMenuItemCrear(javax.swing.JMenuItem jMenuItemCrear) {
+        this.jMenuItemCrear = jMenuItemCrear;
+    }
+
+    public javax.swing.JMenu getjMenuRaiz() {
+        return jMenuRaiz;
+    }
+
+    public void setjMenuRaiz(javax.swing.JMenu jMenuRaiz) {
+        this.jMenuRaiz = jMenuRaiz;
+    }
+
+    public javax.swing.JPanel getjPanel1() {
+        return jPanel1;
+    }
+
+    public void setjPanel1(javax.swing.JPanel jPanel1) {
+        this.jPanel1 = jPanel1;
+    }
+
+    public javax.swing.JPanel getjPanel2() {
+        return jPanel2;
+    }
+
+    public void setjPanel2(javax.swing.JPanel jPanel2) {
+        this.jPanel2 = jPanel2;
+    }
+
+    public javax.swing.JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public void setjScrollPane1(javax.swing.JScrollPane jScrollPane1) {
+        this.jScrollPane1 = jScrollPane1;
+    }
+
+    public javax.swing.JTable getjTable1() {
+        return jTable1;
+    }
+
+    public void setjTable1(javax.swing.JTable jTable1) {
+        this.jTable1 = jTable1;
+    }
+
+    public javax.swing.JButton getJbAplicarFiltros() {
+        return jbAplicarFiltros;
+    }
+
+    public void setJbAplicarFiltros(javax.swing.JButton jbAplicarFiltros) {
+        this.jbAplicarFiltros = jbAplicarFiltros;
+    }
+
+    public javax.swing.JButton getJbAvanzados() {
+        return jbAvanzados;
+    }
+
+    public void setJbAvanzados(javax.swing.JButton jbAvanzados) {
+        this.jbAvanzados = jbAvanzados;
+    }
+
+    public javax.swing.JLabel getJlAnoMatricu() {
+        return jlAnoMatricu;
+    }
+
+    public void setJlAnoMatricu(javax.swing.JLabel jlAnoMatricu) {
+        this.jlAnoMatricu = jlAnoMatricu;
+    }
+
+    public javax.swing.JLabel getJlModelo() {
+        return jlModelo;
+    }
+
+    public void setJlModelo(javax.swing.JLabel jlModelo) {
+        this.jlModelo = jlModelo;
+    }
+
+    public javax.swing.JLabel getJlNombre() {
+        return jlNombre;
+    }
+
+    public void setJlNombre(javax.swing.JLabel jlNombre) {
+        this.jlNombre = jlNombre;
+    }
+
+    public javax.swing.JLabel getJlNumVehiculos() {
+        return jlNumVehiculos;
+    }
+
+    public void setJlNumVehiculos(javax.swing.JLabel jlNumVehiculos) {
+        this.jlNumVehiculos = jlNumVehiculos;
+    }
+
+    public javax.swing.JRadioButton getJrHombre() {
+        return jrHombre;
+    }
+
+    public void setJrHombre(javax.swing.JRadioButton jrHombre) {
+        this.jrHombre = jrHombre;
+    }
+
+    public javax.swing.JRadioButton getJrMujer() {
+        return jrMujer;
+    }
+
+    public void setJrMujer(javax.swing.JRadioButton jrMujer) {
+        this.jrMujer = jrMujer;
+    }
+
+    public javax.swing.JTextField getTfAnoMatriculacion() {
+        return tfAnoMatriculacion;
+    }
+
+    public void setTfAnoMatriculacion(javax.swing.JTextField tfAnoMatriculacion) {
+        this.tfAnoMatriculacion = tfAnoMatriculacion;
+    }
+
+    public javax.swing.JTextField getTfNombre() {
+        return tfNombre;
+    }
+
+    public void setTfNombre(javax.swing.JTextField tfNombre) {
+        this.tfNombre = tfNombre;
+    }
+
+    public javax.swing.JTextField getTfNumVehiculos() {
+        return tfNumVehiculos;
+    }
+
+    public void setTfNumVehiculos(javax.swing.JTextField tfNumVehiculos) {
+        this.tfNumVehiculos = tfNumVehiculos;
+    }
 }

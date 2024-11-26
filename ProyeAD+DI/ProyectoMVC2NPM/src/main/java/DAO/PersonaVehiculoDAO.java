@@ -1,7 +1,7 @@
 package DAO;
 
 import DTO.DTOPersonaVehiculo;
-import DTO.PersonaVehiculoDTO;
+import Persistencia.Conexion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,6 +19,7 @@ public class PersonaVehiculoDAO extends GenericDAO<DTOPersonaVehiculo, Integer> 
     Connection conn;
     PreparedStatement pstmt;
     ResultSet rs;
+    String sql;
 
     // Método para insertar un nuevo registro en la base de datos
     @Override
@@ -30,7 +31,7 @@ public class PersonaVehiculoDAO extends GenericDAO<DTOPersonaVehiculo, Integer> 
             statement.setInt(2, personaVehiculo.getId_vehiculo());
             statement.setString(3, personaVehiculo.getNombre());
             statement.setString(4, personaVehiculo.getMatricula());
-            statement.setString(5, personaVehiculo.getAnyo());
+            statement.setInt(5, personaVehiculo.getAnyo());
             statement.setString(6, personaVehiculo.getMarca());
             statement.setString(7, personaVehiculo.getModelo());
             statement.setDate(8, java.sql.Date.valueOf(personaVehiculo.getFecha_inicio()));
@@ -57,7 +58,7 @@ public class PersonaVehiculoDAO extends GenericDAO<DTOPersonaVehiculo, Integer> 
                         resultSet.getInt("id_vehiculo"),
                         resultSet.getString("nombre"),
                         resultSet.getString("matricula"),
-                        resultSet.getString("anyo"),
+                        resultSet.getInt("anyo"),
                         resultSet.getString("marca"),
                         resultSet.getString("modelo"),
                         resultSet.getDate("fecha_inicio").toString(),
@@ -83,7 +84,7 @@ public class PersonaVehiculoDAO extends GenericDAO<DTOPersonaVehiculo, Integer> 
                         resultSet.getInt("id_vehiculo"),
                         resultSet.getString("nombre"),
                         resultSet.getString("matricula"),
-                        resultSet.getString("anyo"),
+                        resultSet.getInt("anyo"),
                         resultSet.getString("marca"),
                         resultSet.getString("modelo"),
                         resultSet.getDate("fecha_inicio").toString(),
@@ -106,7 +107,7 @@ public class PersonaVehiculoDAO extends GenericDAO<DTOPersonaVehiculo, Integer> 
             statement.setInt(2, personaVehiculo.getId_vehiculo());
             statement.setString(3, personaVehiculo.getNombre());
             statement.setString(4, personaVehiculo.getMatricula());
-            statement.setString(5, personaVehiculo.getAnyo());
+            statement.setInt(5, personaVehiculo.getAnyo());
             statement.setString(6, personaVehiculo.getMarca());
             statement.setString(7, personaVehiculo.getModelo());
             statement.setDate(8, java.sql.Date.valueOf(personaVehiculo.getFecha_inicio()));
@@ -133,8 +134,8 @@ public class PersonaVehiculoDAO extends GenericDAO<DTOPersonaVehiculo, Integer> 
         }
     }
 
-    public List<PersonaVehiculoDTO> filtrarPersonasConVehiculos(String nombre, String marca, String modelo, String genero, Integer año, Integer numPropietarios, int limit, int offset) {
-        List<PersonaVehiculoDTO> listaPersonas = new ArrayList<>();
+    public List<DTOPersonaVehiculo> filtrarPersonasConVehiculos(String nombre, String marca, String modelo, String genero, Integer año, Integer numPropietarios, int limit, int offset) {
+        List<DTOPersonaVehiculo> listaPersonas = new ArrayList<>();
 
         // Validar entradas para evitar inyecciones SQL o entradas inválidas
         if (!limpiarEntradaNombre(nombre) || (año != null && !limpiarEntradaAnio(año)) || (numPropietarios != null && !limpiarEntradaNumPropietarios(numPropietarios))) {
@@ -191,12 +192,7 @@ public class PersonaVehiculoDAO extends GenericDAO<DTOPersonaVehiculo, Integer> 
         parametros.add(limit);  // Límite de resultados por página
         parametros.add(offset); // Desplazamiento de los resultados
 
-        try {
-            conn = ConexionBDD.abrirConexion();
-
-            // Preparar la consulta y convertir a string
-            pstmt = conn.prepareStatement(query.toString());
-
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement statement = connection.prepareStatement(sql)){
             // Añadir los parámetros a la consulta con un bucle 
             for (int i = 0; i < parametros.size(); i++) {
                 pstmt.setObject(i + 1, parametros.get(i)); // Establecer el valor del parámetro en el PreparedStatement
@@ -208,12 +204,12 @@ public class PersonaVehiculoDAO extends GenericDAO<DTOPersonaVehiculo, Integer> 
             while (rs.next()) {
                 String nombrePersona = rs.getString("nombre");
                 String matricula = rs.getString("matricula");
-                int añoVehiculo = rs.getInt("año");
+                int anyo = rs.getInt("año");
                 String marcaVehiculo = rs.getString("marca");
                 String modeloVehiculo = rs.getString("modelo");
 
                 // Crear el objeto PersonaVehiculoDTO y agregarlo a la lista
-                PersonaVehiculoDTO personaVehiculo = new PersonaVehiculoDTO(nombrePersona, matricula, añoVehiculo, marcaVehiculo, modeloVehiculo);
+                DTOPersonaVehiculo personaVehiculo = new DTOPersonaVehiculo(nombre, matricula, 0, marca, modelo);
                 listaPersonas.add(personaVehiculo);
             }
 
@@ -221,10 +217,6 @@ public class PersonaVehiculoDAO extends GenericDAO<DTOPersonaVehiculo, Integer> 
             e.printStackTrace();
         } catch (Exception e) {
             System.out.println("Error inesperado: " + e.getMessage());
-        } finally {
-            ConexionBDD.cerrarResulset(rs);
-            ConexionBDD.cerrarPreparedStatement(pstmt);
-            ConexionBDD.cerrarConexion();
         }
 
         return listaPersonas;
@@ -286,5 +278,48 @@ public class PersonaVehiculoDAO extends GenericDAO<DTOPersonaVehiculo, Integer> 
         }
 
         return filtroValido;
+    }
+    
+        public List<DTOPersonaVehiculo> obtenerPersonasConVehiculos(int pagina, int tamanoPagina) {
+        //creo una lista para almacenar los datos
+        List<DTOPersonaVehiculo> lista = new ArrayList<>();
+        int desplazamiento = (pagina - 1) * tamanoPagina; // Calculo el desplazamiento segun la página y tamaño de página
+
+        // Hago la consulta SQL con LIMIT y OFFSET para la paginación
+        String QUERY_SELECT = "SELECT nombre, matricula, año, marca, modelo "
+                + "FROM historico "
+                + "WHERE fecha_fin IS NULL "
+                + "LIMIT " + tamanoPagina + " OFFSET " + desplazamiento;
+
+        try {
+            conn = Conexion.abrirConexion();
+
+            pstmt = conn.prepareStatement(QUERY_SELECT);
+
+            rs = pstmt.executeQuery();
+
+            //recorro resultados para añadir a la lista
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                String matricula = rs.getString("matricula");
+                int año = rs.getInt("año");
+                String marca = rs.getString("marca");
+                String modelo = rs.getString("modelo");
+
+                // Creo un objeto PersonaVehiculoDTO y lo añado a la lista
+                DTOPersonaVehiculo personaVehiculo = new DTOPersonaVehiculo(nombre, matricula, año, marca, modelo);
+                lista.add(personaVehiculo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            Conexion.cerrarResulset(rs);
+            Conexion.cerrarPreparedStatement(pstmt);
+            Conexion.cerrarConexion();
+        }
+        // Retornar la lista de personas con vehículos
+        return lista;
     }
 }

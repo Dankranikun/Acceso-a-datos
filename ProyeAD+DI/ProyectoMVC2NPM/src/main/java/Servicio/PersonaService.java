@@ -2,6 +2,7 @@ package Servicio;
 
 import DAO.PersonaDAO;
 import DTO.DTOPersona;
+import Entidades.Persona;
 import java.util.List;
 
 public class PersonaService {
@@ -35,5 +36,16 @@ public class PersonaService {
     // Eliminar una persona por ID (clave primaria)
     public boolean eliminarPersona(String key) {
         return personaDAO.delete(key);
+    }
+    
+        public List<Persona> obtenerPersonas() {
+        List<Persona> personas = null; 
+
+        try {
+            personas = personaDAO.mostrar();
+        } catch (Exception e) {
+            System.out.println("Error al obtener personas: " + e.getMessage());
+        }
+        return personas;
     }
 }
